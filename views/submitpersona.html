@@ -1,0 +1,178 @@
+
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Submit persona</title>
+	<link rel="stylesheet" href="../css/submitpersona.css">
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+	$(function(){
+		//connect to submittedPersonas SQL database
+		var Connection = require('tedious').Connection;
+		var config = {
+			userName: 'root',
+			password: 'fucksluts',
+			server: '127.0.0.1'
+		};
+		var connection = new Connection(config);
+		connection.on('connect', function(err) {
+		// If no error, then good to proceed.
+			console.log("Connected");
+		});
+
+//submit persona page adds to submittedPersonas mysql table
+//jquery to accept PERSONA_NAME and PERSONA_GROUP and number_of_group
+//if PERSONA_NAME is in submittedPersonas reject entry
+//else insert both into database and assign permanent row number
+//PERSONA_NAME, PERSONA_GROUP, number_of_group, row_number, total_number_votes, yes's, no's
+//update mysql database by querying mongo
+
+		"INSERT SalesLT.Product (Name, ProductNumber, StandardCost, ListPrice, SellStartDate) 
+		OUTPUT INSERTED.ProductID 
+		VALUES (@Name, @Number, @Cost, @Price, CURRENT_TIMESTAMP);"
+
+var persona_names = regex lowercase and remove punctuation/spaces($(some jquery));
+var persona_groupname = $(some jquery);
+var number_of_group = $(some jquery);
+
+
+
+//does the name already exist
+var nameToCheck = PERSONA_NAME;
+var groupToCheck = PERSONA_GROUP;
+function checkIfAlreadyInDatabase(nameToCheck, groupToCheck) {
+	request = new Request(
+		"SELECT * FROM submittedPersonas WHERE PERSONA_NAME = nameToCheck AND PERSONA_GROUP = groupToCheck;", function(err) {
+			if (err) {
+				console.log(err);}
+			});
+		console.log(request);
+		if(request.PERSONA_NAME != ""){
+			return true;
+		};
+	});
+
+// click handler
+function onClick(event) {
+  var titles = $('input[name^=titles]').map(function(idx, elem) {
+	return $(elem).val();
+  }).get();
+
+  console.log(titles);
+  event.preventDefault();
+}
+
+// attach button click listener on dom ready
+$(function() {
+  $('button').click(onClick);
+});
+
+		$(document).on('click', '#create', function(){
+			
+			var PERSONA_NAME = $('.newRoom').val();
+			//remove all punctuation and spaces, then make all lower case
+			PERSONA_NAME = PERSONA_NAME.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+			//if PERSONA_NAME is nothing do nothing
+			if(PERSONA_NAME !=''){
+				//if PERSONA_NAME already exists in database do nothing
+				if(PERSONA_NAME )
+					if PERSONA_NAME not in mysql AND if # of entries with PERSONA_GROUP < number_of_group {
+	add mysql entry using input variables and create row_number
+}
+				var room_number = parseInt(Math.random() * 10000);
+				socket.emit('newRoom',{room_name: room_name, room_number: room_number});
+				$('.newRoom').val('');
+			}
+		})
+
+
+		$(document).on('click', '#create', function(){
+			
+			var submitted_Group = $('.submitGroup').val();
+			if(submitted_Group != ''){
+				socket.emit('submitGroupSocketEmit',{submitted_Group: room_name});
+				$('.submitGroup').val('');
+			}
+		})
+
+
+
+//convert mongo database to sql database to matrix text document
+//update matrix text document that python uses 
+
+
+//request mongo data combo involved
+
+		var host = '{{config.host}}';
+		var messages = io.connect(host + '/messages');
+		var roomNum = {{room_number}};
+		var userName = '{{user.fullname}}';
+		var userPic = '{{user.profilePic}}';
+
+		messages.on('connect', function(){
+			console.log('Connection Established !!');
+			messages.emit('joinroom', {room:roomNum, user:userName, userPic:userPic})
+		})
+
+		$(document).on('keyup', '.newmessage', function(e){
+			if(e.which === 13 && $(this).val()!=''){
+				messages.emit('newMessage', {
+					room_number:roomNum,
+					user:userName,
+					userPic:userPic,
+					message:$(this).val()
+				})
+				updateMessageFeed(userPic, $(this).val());
+				$(this).val('');
+			}
+		})
+
+		messages.on('messagefeed', function(data){
+			var msgs = JSON.parse(data);
+			updateMessageFeed(msgs.userPic, msgs.message);
+		})
+
+		function updateMessageFeed(userPic, message){
+			var str = '<li>';
+				str += '<div class="msgbox">';
+				str += '<div class="pic"><img src="' + userPic + '"></div>';
+				str += '<div class="msg"><p>' + message + '</p></div>';
+				str += '</div>';
+				str += '</li>';
+			$(str).hide().prependTo($('.messages')).slideDown(100);
+		}
+
+		messages.on('updateUserList', function(data){
+			var userlist = JSON.parse(data);
+			$('.users').html('');
+			for(var n = 0; n < userlist.length; n++){
+				var str = '<li><img src="' + userlist[n].userPic + '"><h5>' + userlist[n].user + '</h5></li>';
+				$(str).prependTo($('.users'));
+			}
+		})
+
+		setInterval(function(){
+			messages.emit('updateList', {room:roomNum});
+		}, 15 * 1000);
+	})
+	</script>
+</head>
+<body>
+	<div class="cr-container">
+		<h1 class="cr-title"> Submit Persona</h1>
+		<div class="cr-userbox">
+			hey
+
+
+		</div>
+
+		<div class="cr-newroom">
+			<input type="text" class="submitGroup" autocomplete="off">
+			<button id="create">Submit New Group</button>
+		</div>
+	</div>
+</body>
+</html>

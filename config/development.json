@@ -1,0 +1,10 @@
+{
+	"dbURL":"mongodb://austincapobianco:fucksluts10@ds051378.mongolab.com:51378/chatcat", 
+	"sessionSecret":"efwfeaa",
+	"fb": {
+		"appID": "1506475379645896",
+		"appSecret": "bb7270bb051d6992b81a364729c80789",
+		"callbackURL": "http://localhost:3000/auth/facebook/callback"
+	},
+	"host":"http://localhost:3000"
+}

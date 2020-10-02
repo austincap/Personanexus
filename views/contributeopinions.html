@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Contribute opinions</title>
+	<link rel="stylesheet" href="../css/room.css">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+	$(function(){
+
+		//on vote page
+
+
+		var Connection = require('tedious').Connection;
+var config = {
+    userName: 'root',
+    password: 'fucksluts',
+    server: '127.0.0.1'
+};
+var connection = new Connection(config);
+connection.on('connect', function(err) {
+// If no error, then good to proceed.
+    console.log("Connected");
+});
+	var express = require('express'),
+		app = express(),
+		path = require('path'),
+		cookieParser = require('cookie-parser'),
+		session = require('express-session'),
+		config = require('./config/config.js'),
+		ConnectMongo = require('connect-mongo')(session),
+		mongoose = require('mongoose').connect(config.dbURL);
+		
+	var host = '{{config.host}}';
+
+		socket.on('connect', function(){
+			console.log('Connection to submittedPersonas established');
+		})
+
+app.use(session({secret:'dicks', 
+	store: new ConnectMongo({
+			//url:config.dbURL,
+			mongooseConnection:mongoose.connections[0],
+			stringify:true
+		})
+})) 
+
+var rawVoteDataGeneralSchema = mongoose.Schema({
+	personacombo:Array,
+	yes:Array,
+	no:Array
+});
+
+var singleEntryOfRawVoteData = mongoose.model('rawVoteData', rawVoteDataGeneralSchema);
+
+
+//select random combo from two entries taken from sql database
+//process by separating the personacombo and 
+//personalist contains reference number, name, groupname
+
+SELECT column FROM table
+ORDER BY RAND()
+LIMIT 1
+
+
+var Request = require('tedious').Request;
+var TYPES = require('tedious').TYPES;
+
+function randomlySelectedPersona() {
+    randomRequest = new Request("SELECT * FROM submittedPersonas; ORDER BY RAND(); LIMIT 1;", function(err) {
+    if (err) {
+        console.log(err);}
+    });
+    console.log('randomRequest: ' + randomRequest);
+    return randomRequest;
+}
+
+var personaA = randomlySelectedPersona();
+var personaB = randomlySelectedPersona();
+
+//make sure the personas are not part of the same group
+//this is to keep the persona comparisons as parallel as possible
+while(true){
+	if personaA.PART_OF_GROUP != personaB.PART_OF_GROUP {
+		break;
+	} else {
+		var personaB = randomlySelectedPersona();
+		continue;
+	}
+}
+
+//once 2 appropriate personas are obtained, make the pairing equivalent
+var personacomboTemp = [personaA.PERSONA_NAME+personaB.PERSONA_NAME, personaB.PERSONA_NAME+personaA.PERSONA_NAME];
+
+//retrieve user selection for the combo with jquery (1 is yes 0 is no)
+var userSelection = 1 or 0
+
+if (db.mycollection.find({'personacombo': {'$in': [personaA+personaB],[personaB+personaA] }}).count() > 0 ) {
+	if (userSelection == 1) {
+		(db.mycollection.find({'personacombo': {'$in': [personaA+personaB],[personaB+personaA] }}))
+		console.log('added a yes for this pair');
+	}
+}
+
+
+//find and update appropriate mongo rawVoteData database entry or create a new one with upsert
+if (userSelection = 1) {
+	db.collection.update( { 'personacombo': {'$in': [personaA+personaB],[personaB+personaA] }},
+	{ 'personacombo': [personaA+personaB],[personaB+personaA], {'$push': {'yes':1} } },
+	{ upsert: true } )
+} else {
+	db.collection.update( { 'personacombo': {'$in': [personaA+personaB],[personaB+personaA] }},
+	{ 'personacombo': [personaA+personaB],[personaB+personaA], {'$push': {'no':1} } },
+	{ upsert: true } )
+}
+
+//persona names must be the same in mongo and mysql
+
+		var host = '{{config.host}}';
+		var messages = io.connect(host + '/messages');
+		var roomNum = {{room_number}};
+		var userName = '{{user.fullname}}';
+		var userPic = '{{user.profilePic}}';
+
+		messages.on('connect', function(){
+			console.log('Connection Established !!');
+			messages.emit('joinroom', {room:roomNum, user:userName, userPic:userPic})
+		})
+
+		$(document).on('keyup', '.newmessage', function(e){
+			if(e.which === 13 && $(this).val()!=''){
+				messages.emit('newMessage', {
+					room_number:roomNum,
+					user:userName,
+					userPic:userPic,
+					message:$(this).val()
+				})
+				updateMessageFeed(userPic, $(this).val());
+				$(this).val('');
+			}
+		})
+
+		messages.on('messagefeed', function(data){
+			var msgs = JSON.parse(data);
+			updateMessageFeed(msgs.userPic, msgs.message);
+		})
+
+		function updateMessageFeed(userPic, message){
+			var str = '<li>';
+				str += '<div class="msgbox">';
+				str +=	'<div class="pic"><img src="' + userPic + '"></div>';
+				str +=	'<div class="msg"><p>' + message + '</p></div>';
+				str +=	'</div>';
+				str += '</li>';
+			$(str).hide().prependTo($('.messages')).slideDown(100);
+		}
+
+		messages.on('updateUsersList', function(data){
+			var userlist = JSON.parse(data);
+			$('.users').html('');
+			for(var n = 0; n < userlist.length; n++){
+				var str = '<li><img src="' + userlist[n].userPic + '"><h5>' + userlist[n].user + '</h5></li>';
+				$(str).prependTo($('.users'));
+			}
+		})
+
+		setInterval(function(){
+			messages.emit('updateList', {room:roomNum});
+		}, 15 * 1000);
+	})
+	</script>
+</head>
+<body>
+<div class="rm-container">
+		<h1 class="rm-title">ChatCAT</h1>
+		<div class="rm-userbox">
+			<img src="{{user.profilePic}}" class="userPic">
+			<h3 class="userName">{{user.fullname}} | <a href="/logout">Logout</a><a href="/chatrooms">More Chatrooms</a></h3>
+		</div>
+		<div class="rm-roomname">
+			<h5>{{room_name}}</h5>
+		</div>
+		<div class="rm-messages">
+			<ul class="messages">
+				<!-- <li>
+					<div class="msgbox">
+						<div class="pic"><img src="../public/images/profilepic.jpg">Sachin Bhatnagar</div>
+						<div class="msg"><p>Hi there this looks nice !</p></div>
+					</div>
+				</li>  -->
+			</ul>
+		</div>
+		<div class="rm-users">
+			<ul class="users">
+				
+			</ul>
+		</div>
+		<div class="rm-newmessage">
+			<input type="text" class="newmessage" autocomplete="off" placeholder="Type in your message and press enter !">
+			
+		</div>
+	</div>
+</body>
+</html>

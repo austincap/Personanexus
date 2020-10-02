@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<style>
+
+
+
+body
+{
+  margin: 0;
+  padding: 2.5%;
+  padding-top: 1%;
+  background: gray;
+}
+
+
+ul {
+display: table; 
+table-layout: fixed; /* the magic dust that ensure equal width */  
+}
+
+li {
+	 display: table-cell; 
+	 text-align: left; 
+	position: relative;
+display: inline-block;
+list-style: outside none none;
+}
+
+
+#submitpersonas {
+
+	background-color: #45B320;
+	border-style: inset;
+}
+#contributeopinions {
+
+	background-color: #B34520;
+	border-style: inset;
+}
+#viewresults {
+	border-style: inset;
+	background-color: #208EB3;
+
+}
+
+.title {
+	text-align: center; 
+}
+
+
+.container {
+	background:#2A515E;
+	position: relative;
+	width: 100%;
+	display: inline-block;
+	padding-left: -100px;
+
+}
+
+
+img.resize{
+    width: 90%; /* you can use % */
+    height: 95%;
+}
+
+
+.content{
+    float:left;
+    display:block;
+    width: 30%;
+    min-width: 350px;
+    padding: 0.5%;
+    }
+.picholder{
+    float:left;
+    display:block;
+    width: 50%;
+    min-width: 370px;
+}
+
+.content2{
+	float:left;
+    display:block;
+    width: 50%;
+    min-width: 370px;
+}
+
+/*Fade all the DIV when user hovers on any div*/
+.container:hover .content{
+  zoom: 1;
+  filter: alpha(opacity=45);
+  opacity: 0.45;
+  -webkit-transition: opacity .5s ease-in-out;
+  -moz-transition: opacity .5s ease-in-out;
+  -ms-transition: opacity .5s ease-in-out;
+  -o-transition: opacity .5s ease-in-out;
+  transition: opacity .5s ease-in-out;
+}
+
+/*Fade out the particular DIV when user hover on that DIV*/
+.container .content:hover{
+  box-shadow: 3px 3px 15px #666;
+  border-color:#C76C0C;
+  background: #C76C0C;
+  color: #fff;
+  cursor: pointer;
+  
+  /*Opacity*/
+  zoom: 1;
+  filter: alpha(opacity=100);
+  opacity: 1;
+}
+
+a:visited {
+ COLOR: #000000 /*The color of the visited link*/
+}
+
+
+</style>
+
+<title>Personanexus</title>
+
+<!-- with images -->
+<!-- <div id="breadcrumb">
+    <ul class="crumbs2">
+        <li class="first"><a href="http://localhost/test/index.html" style="z-index:9;"><span></span>Home</a></li>
+        <li><a href="analytics.html" style="z-index:8;">Analytics</a></li>
+
+    </ul>
+</div>
+ -->
+<div>
+<h1 class="title">Personanexus</h1>
+</div>
+
+<div class="content2">It's fun to put people into boxes. From horoscopes to 'which Beatle are you?' type quizzes *a certain segment* of the population have always been into this. The ultimate goal of Personanexus is to draw parallels between all the different ways to categorize personalities. Check out the adjacent pic courtesy of Cracked. The ninja turtle Leonardo is the leader of his group. He's fair and relatively controlled. This "leader" trope is seen in other cartoons and tv shows</div>
+
+
+ 	
+
+
+<div class="content2"><img class="resize" src="ppic.jpg" alt="Personanexus in a nutshell"></div>
+
+<!-- height="320" width="690"> </div> -->
+
+<div class="container">
+	<ul>
+	<a href="submitpersonas.php"><li class="content" id="submitpersonas"><h2 align="center">Submit Personas</h2> 
+		This is where anyone can add new groups and personas to build the database. A persona group is the collection of individual personas. For instance, the Meyers-Briggs Type Indicator is the persona group for the 16 included personality types/personas. Duplicate persona groups are periodically merged. Bored? Add in all the pokemon so people can start determining which pokemon they are.
+	</li></a>
+	<a href="contributeopinions.php"><li class="content" id="contributeopinions"><h2 align="center">Contribute Opinions</h2>
+		This is where the user insight hits the technology by gathering raw data. You're given two personas from two different groups and are simply asked whether or not they're similar. Google does a pretty good job of providing images. efawkeufhaw;eoiufhaw;eoiu;hw;oeigha ;oerigha;oregha;sorghar;oighar;lgja;igha;righar; oigha;roighaer;oighareo; 
+	</li></a>
+	<li class="content" id="viewresults"><h2 align="center">View Results</h2>
+		The main information being extracted is the similarity each persona in a group has to each other group. If your ninja turtle is Leonardo, what is your corresponding Persona similarity is determined in several ways. The raw data used is a yes/no vote for each possible pair of personas, except no personas in the same group are compared. The data begins getting processed immediately: every yes vote for the corresponding
+	</li>
+	</ul>
+	
+</div>
+
+
+
+
+
+</html>
